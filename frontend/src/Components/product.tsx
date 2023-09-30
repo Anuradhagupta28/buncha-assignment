@@ -2,33 +2,47 @@ import { Flex, Button, Box, Image, VStack, Text } from "@chakra-ui/react";
 import Scroll from "./scroll";
 import { useQuery } from "react-query";
 import axios from "axios";
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import { useBreakpointValue } from "@chakra-ui/react";
-// import plus from "../icons/plusicon.svg"
-// import minus from "../icons/minusicon.svg"
-import { isPlusToken } from "typescript";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { countAction, setDataSave } from "../Redux/receipeAction";
+
 
 const retrievePosts = async () => {
   const response = await axios.get("https://fakestoreapi.com/products");
   return response.data;
 };
 
+
 const Product = () => {
-  const [showImage1, setShowImage1] = useState(true);
-
-  const toggleImage = () => {
-    setShowImage1(!showImage1);
+  const [cart, setCart] = useState<any>([]);
+  const dispatch=useDispatch()
+  
+  const toggleImage = (el: any) => {
+   
+    const itemIndex = cart.findIndex((item:any) => item.id === el.id);
+  
+    if (itemIndex === -1) {
+      // If not in the cart, add it
+      setCart([...cart, el]);
+   
+      
+    } else {
+      // If in the cart, remove it
+      const updatedCart = [...cart];
+      updatedCart.splice(itemIndex, 1);
+      setCart(updatedCart);
+      
+    }
+ 
+  
+   
   };
-  const imageSrc = showImage1
-    ? "https://www.linkpicture.com/q/plusicon.svg"
-    : "https://www.linkpicture.com/q/minusicon.svg";
-
-  const {
+   const count = cart.length;
+   console.log("count",count);
+   dispatch(countAction(count))
+  dispatch(setDataSave(cart))
+  
+ const {
     data: products,
     error,
     isLoading,
@@ -36,15 +50,8 @@ const Product = () => {
 
   if (isLoading) return <Box>Fetching posts...</Box>;
   // if (error) return <Box>An error occurred: {error}</Box>;
-  console.log(products);
+  // console.log(products);
 
-  const containerStyle: object = {
-    width: "100%", // Set your desired width
-    height: "500px", // Set your desired height
-    overflowX: "hidden", // Hide the horizontal scrollbar
-    overflowY: "scroll", // Enable vertical scrolling
-    direction: "rtl",
-  };
 
   const settings: object = {
     dots: false,
@@ -83,8 +90,8 @@ const Product = () => {
 
   return (
     <Box>
-      <Flex border="solid red">
-        <VStack border="solid black" margin="30px">
+      <Flex >
+        <VStack  margin="30px">
           <Button
             width="200px"
             height="45px"
@@ -231,187 +238,92 @@ const Product = () => {
         </VStack>
         {/* <Scroll /> */}
 
-        <Box margin="30px">
+      
          
-               
+               {/*  1----------------------------*/}
+        <Box margin="30px">
           <Box textAlign="start" marginTop="25px">
-            <Text fontSize='3xl'>Title</Text>
+            <Text fontSize="3xl">Title</Text>
           </Box>
-
           <Flex>
             {products.map((el: any) => {
               return (
-                <Box
-                  w="300px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                  gap="8px"
-                 
-                >
+                <Box w="300px" display="flex" flexDirection="column" alignItems="start" gap="8px">
                   <Flex>
-                    <Image boxSize="150px" src={el.image} alt="Dan Abramov" />
+                    <Image boxSize="150px" src={el.image} alt={el.title} />
                     <Image
                       height="55px"
-                      src={imageSrc}
+                      src={
+                        cart.find((item: any) => item.id === el.id)
+                          ? 'https://www.linkpicture.com/q/minusicon.svg'
+                          : 'https://www.linkpicture.com/q/plusicon.svg'
+                      }
                       marginLeft="-20px"
                       marginTop="90px"
-                      onClick={toggleImage}
+                      onClick={() => {
+                        toggleImage(el);
+                      }}
                       alt="Toggle Image"
                       style={{ cursor: "pointer" }}
-                    ></Image>
-                  </Flex>{" "}
-                  <Text  fontSize='xl' >₹: {el.price}</Text>
-                  {/* <Text fontSize='xl'>{el.title}</Text> */}
-                  <Text fontSize='xl'>{el.category}</Text>
-                  <Text fontSize='l' color="grey">{el.rating.rate}</Text>
+                    />
+                  </Flex>
+                  <Text fontSize="xl">₹: {el.price}</Text>
+                  <Text fontSize="xl">{el.category}</Text>
+                  <Text fontSize="l" color="grey">{el.rating.rate}</Text>
                 </Box>
               );
             })}
           </Flex>
 
-          <Box textAlign="start" marginTop="25px">
-            <Text fontSize='3xl'>Title</Text>
-          </Box>
-
-          <Flex>
-            {products.map((el: any) => {
-              return (
-                <Box
-                  w="300px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                  gap="8px"
-                 
-                >
-                  <Flex>
-                    <Image boxSize="150px" src={el.image} alt="Dan Abramov" />
-                    <Image
-                      height="55px"
-                      src={imageSrc}
-                      marginLeft="-20px"
-                      marginTop="90px"
-                      onClick={toggleImage}
-                      alt="Toggle Image"
-                      style={{ cursor: "pointer" }}
-                    ></Image>
-                  </Flex>{" "}
-                  <Text  fontSize='xl' >₹: {el.price}</Text>
-                  {/* <Text fontSize='xl'>{el.title}</Text> */}
-                  <Text fontSize='xl'>{el.category}</Text>
-                  <Text fontSize='l' color="grey">{el.rating.rate}</Text>
-                </Box>
-              );
-            })}
-          </Flex>
+              {/*  2----------------------------*/}
 
           
           <Box textAlign="start" marginTop="25px">
-            <Text fontSize='3xl'>Title</Text>
+            <Text fontSize="3xl">Title</Text>
           </Box>
-
           <Flex>
             {products.map((el: any) => {
               return (
-                <Box
-                  w="300px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                  gap="8px"
-                 
-                >
+                <Box w="300px" display="flex" flexDirection="column" alignItems="start" gap="8px">
                   <Flex>
-                    <Image boxSize="150px" src={el.image} alt="Dan Abramov" />
+                    <Image boxSize="150px" src={el.image} alt={el.title} />
                     <Image
                       height="55px"
-                      src={imageSrc}
+                      src={
+                        cart.find((item: any) => item.id === el.id)
+                          ? 'https://www.linkpicture.com/q/minusicon.svg'
+                          : 'https://www.linkpicture.com/q/plusicon.svg'
+                      }
                       marginLeft="-20px"
                       marginTop="90px"
-                      onClick={toggleImage}
+                      onClick={() => {
+                        toggleImage(el);
+                      }}
                       alt="Toggle Image"
                       style={{ cursor: "pointer" }}
-                    ></Image>
-                  </Flex>{" "}
-                  <Text  fontSize='xl' >₹: {el.price}</Text>
-                  {/* <Text fontSize='xl'>{el.title}</Text> */}
-                  <Text fontSize='xl'>{el.category}</Text>
-                  <Text fontSize='l' color="grey">{el.rating.rate}</Text>
+                    />
+                  </Flex>
+                  <Text fontSize="xl">₹: {el.price}</Text>
+                  <Text fontSize="xl">{el.category}</Text>
+                  <Text fontSize="l" color="grey">{el.rating.rate}</Text>
                 </Box>
               );
             })}
           </Flex>
+
+           
+
+       
+
+            
 
          
-          <Box textAlign="start" marginTop="25px">
-            <Text fontSize='3xl'>Title</Text>
-          </Box>
+         
 
-          <Flex>
-            {products.map((el: any) => {
-              return (
-                <Box
-                  w="300px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                  gap="8px"
-                 
-                >
-                  <Flex>
-                    <Image boxSize="150px" src={el.image} alt="Dan Abramov" />
-                    <Image
-                      height="55px"
-                      src={imageSrc}
-                      marginLeft="-20px"
-                      marginTop="90px"
-                      onClick={toggleImage}
-                      alt="Toggle Image"
-                      style={{ cursor: "pointer" }}
-                    ></Image>
-                  </Flex>{" "}
-                  <Text  fontSize='xl' >₹: {el.price}</Text>
-                  {/* <Text fontSize='xl'>{el.title}</Text> */}
-                  <Text fontSize='xl'>{el.category}</Text>
-                  <Text fontSize='l' color="grey">{el.rating.rate}</Text>
-                </Box>
-              );
-            })}
-          </Flex>
+        
 
-          <Box textAlign="start">
-            <Text>Title</Text>
+         
           </Box>
-          <Flex>
-            {products.map((el: any) => {
-              return (
-                <Box
-                  w="300px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                >
-                  <Flex>
-                    <Image boxSize="150px" src={el.image} alt="Dan Abramov" />
-                    <Image
-                      height="55px"
-                      src={imageSrc}
-                      marginLeft="-20px"
-                      marginTop="90px"
-                      onClick={toggleImage}
-                      alt="Toggle Image"
-                      style={{ cursor: "pointer" }}
-                    ></Image>
-                  </Flex>{" "}
-                  <Text>{el.price}</Text>
-                  <Text>{el.title}</Text>
-                  <Text>{el.category}</Text>
-                </Box>
-              );
-            })}
-          </Flex>
-        </Box>
       </Flex>
     </Box>
   );

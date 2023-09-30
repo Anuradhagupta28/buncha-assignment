@@ -7,17 +7,20 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from 'react-router-dom';
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  <BrowserRouter>
   <QueryClientProvider client={queryClient}>
     <ChakraProvider>
     <App />
   </ChakraProvider>
   </QueryClientProvider>
+  </BrowserRouter>
   
 );
 
