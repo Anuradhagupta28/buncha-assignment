@@ -1,9 +1,5 @@
 # buncha-assignment
 
-
-In this assignment, I have implemented a login page with pre-defined credentials. When you click on the login button, it makes a request to the backend API, and upon successful login, it stores the authentication token in the local storage. With this token, it retrieves and displays chart data using Chart.js.
-If you click on the logout button, the token will be removed from local storage, and you will be redirected back to the login page.
-
 In this assignment, I have implemented product and cart pages with the ability to add and remove items. The UI follows a Figma design, and Redux manages data. A sidebar is included.
 It's a complex task that requires implementing actions, components, styling, and routing, with room for further refinements and features.
 
