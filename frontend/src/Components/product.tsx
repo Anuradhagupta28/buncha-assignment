@@ -19,6 +19,10 @@ const Product = () => {
  
   const productRef = useRef(null);
   const jewelryRef = useRef(null);
+  const shoeRef = useRef(null);
+  const tshirtRef = useRef(null);
+  const bagRef = useRef(null);
+ 
   
 
   const scrollToDiv = (ref:any) => {
@@ -63,54 +67,21 @@ const Product = () => {
  
 
 
-  const settings: object = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 2,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  
   const isMobile = window.innerWidth <= 768; 
   return (
     <Box>
       <Stack direction={["column","row", "row"]} >
-        <Stack direction={["row","column", "column"]} margin="30px" >
+        <Stack direction={["row","column", "column"]} margin="30px" w={["50%","75%","100%"]} >
           <Button
-            width="200px"
-            height="45px"
+            width={["80px","200px","200px"]}
+            height={["60px","45px","45px"]}
             font-size="16px"
-            backgroundColor="white"
+            backgroundColor={["#EDEDED","white","white"]}
             display="flex"
             flexDirection="column"
             alignItems="start"
-            color="grey"
+            color={["grey","blue","grey"]}
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
             onClick={() => scrollToDiv(productRef)}
           >
@@ -119,7 +90,7 @@ const Product = () => {
           <Button
             width={["200px"]}
             height="45px"
-            font-size="16px"
+            font-size={["1px","5px","16px"]}
             backgroundColor="white"
             display="flex"
             flexDirection="column"
@@ -140,8 +111,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(shoeRef)}
           >
-            Canned Foods & soups
+           Shoes
           </Button>
           <Button
             width="200px"
@@ -153,8 +125,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(tshirtRef)}
           >
-            Bakery
+           Tshirt
           </Button>
           <Button
             width="200px"
@@ -166,8 +139,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(bagRef)}
           >
-            Diary & Eggs
+           Bags
           </Button>
           <Button
             width="200px"
@@ -179,8 +153,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(productRef)}
           >
-            Frozen
+           product
           </Button>
           <Button
             width="200px"
@@ -192,8 +167,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(jewelryRef)}
           >
-            Meat
+           Jewelry
           </Button>
           <Button
             width="200px"
@@ -218,8 +194,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(shoeRef)}
           >
-            Pizza
+            Shoes
           </Button>
           <Button
             width="200px"
@@ -231,8 +208,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(tshirtRef)}
           >
-            Produce
+          Tshirt
           </Button>
           <Button
             width="200px"
@@ -244,8 +222,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(bagRef)}
           >
-            Prepare Foods
+          Bags
           </Button>
         </Stack>
         {/* <Scroll /> */}
@@ -259,21 +238,22 @@ const Product = () => {
           <Box textAlign="start" marginTop="25px">
             <Text fontSize="3xl"> Product</Text>
           </Box>
-          <Flex>
+          <Flex  gap={["30px","0px","0px"]} height={["270px","270px","270px"]}>
             {products.map((el: any) => {
               return (
-                <Box w={isMobile ? "100%" : "300px"} display="flex" flexDirection="column" alignItems="start" gap="8px">
+                <Box width={["400px","300px","300px"]}display="flex" flexDirection="column" alignItems="start" gap={["5px","8px","8px"]}>
                   <Flex>
-                    <Image boxSize={isMobile ? "100px" : "150px"} src={el.image} alt={el.title} />
+                    
+                    <Image boxSize="150px" src={el.image} alt={el.title} height={["100px","150px","152px"]}/>
                     <Image
-                      height="55px"
+                      height={["45px","55px","55px"]}
                       src={
                         cart.find((item: any) => item.id === el.id)
                           ? 'https://www.linkpicture.com/q/minusicon.svg'
                           : 'https://www.linkpicture.com/q/plusicon.svg'
                       }
                       marginLeft="-20px"
-                      marginTop="90px"
+                      marginTop={["70px","90px","90px"]}
                       onClick={() => {
                         toggleImage(el);
                       }}
@@ -281,8 +261,8 @@ const Product = () => {
                       style={{ cursor: "pointer" }}
                     />
                   </Flex>
-                  <Text fontSize="xl">₹: {el.price}</Text>
-                  <Text fontSize="xl">{el.category}</Text>
+                  <Text fontSize={["md","xl","xl"]}>₹: {el.price}</Text>
+                  <Text fontSize={["md","xl","xl"]}>{el.category}</Text>
                   <Text fontSize="l" color="grey">{el.rating.rate}</Text>
                 </Box>
               );
@@ -296,21 +276,22 @@ const Product = () => {
           <Box textAlign="start" marginTop="25px">
             <Text fontSize="3xl">Jewelry</Text>
           </Box>
-          <Flex>
+          <Flex  gap={["30px","0px","0px"]} height={["270px","270px","270px"]}>
             {products.map((el: any) => {
               return (
-                <Box w="300px" display="flex" flexDirection="column" alignItems="start" gap="8px">
+                <Box width={["400px","300px","300px"]}display="flex" flexDirection="column" alignItems="start" gap={["5px","8px","8px"]}>
                   <Flex>
-                    <Image boxSize="150px" src={el.image} alt={el.title} />
+                    
+                    <Image boxSize="150px" src={el.image} alt={el.title} height={["100px","150px","152px"]}/>
                     <Image
-                      height="55px"
+                      height={["45px","55px","55px"]}
                       src={
                         cart.find((item: any) => item.id === el.id)
                           ? 'https://www.linkpicture.com/q/minusicon.svg'
                           : 'https://www.linkpicture.com/q/plusicon.svg'
                       }
                       marginLeft="-20px"
-                      marginTop="90px"
+                      marginTop={["70px","90px","90px"]}
                       onClick={() => {
                         toggleImage(el);
                       }}
@@ -318,8 +299,47 @@ const Product = () => {
                       style={{ cursor: "pointer" }}
                     />
                   </Flex>
-                  <Text fontSize="xl">₹: {el.price}</Text>
-                  <Text fontSize="xl">{el.category}</Text>
+                  <Text fontSize={["md","xl","xl"]}>₹: {el.price}</Text>
+                  <Text fontSize={["md","xl","xl"]}>{el.category}</Text>
+                  <Text fontSize="l" color="grey">{el.rating.rate}</Text>
+                </Box>
+              );
+            })}
+          </Flex>
+          </Box>
+
+
+          {/* 3------------------------ */}
+
+          <Box ref={shoeRef}>
+          <Box textAlign="start" marginTop="25px">
+            <Text fontSize="3xl"> Shoes</Text>
+          </Box>
+          <Flex  gap={["30px","0px","0px"]} height={["270px","270px","270px"]}>
+            {products.map((el: any) => {
+              return (
+                <Box width={["400px","300px","300px"]}display="flex" flexDirection="column" alignItems="start" gap={["5px","8px","8px"]}>
+                  <Flex>
+                    
+                    <Image boxSize="150px" src={el.image} alt={el.title} height={["100px","150px","152px"]}/>
+                    <Image
+                      height={["45px","55px","55px"]}
+                      src={
+                        cart.find((item: any) => item.id === el.id)
+                          ? 'https://www.linkpicture.com/q/minusicon.svg'
+                          : 'https://www.linkpicture.com/q/plusicon.svg'
+                      }
+                      marginLeft="-20px"
+                      marginTop={["70px","90px","90px"]}
+                      onClick={() => {
+                        toggleImage(el);
+                      }}
+                      alt="Toggle Image"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Flex>
+                  <Text fontSize={["md","xl","xl"]}>₹: {el.price}</Text>
+                  <Text fontSize={["md","xl","xl"]}>{el.category}</Text>
                   <Text fontSize="l" color="grey">{el.rating.rate}</Text>
                 </Box>
               );
@@ -327,7 +347,79 @@ const Product = () => {
           </Flex>
           </Box>
            
+           {/* 4------------------------------ */}
+           <Box ref={tshirtRef}>
+          <Box textAlign="start" marginTop="25px">
+            <Text fontSize="3xl"> Tshirt</Text>
+          </Box>
+          <Flex  gap={["30px","0px","0px"]} height={["270px","270px","270px"]}>
+            {products.map((el: any) => {
+              return (
+                <Box width={["400px","300px","300px"]}display="flex" flexDirection="column" alignItems="start" gap={["5px","8px","8px"]}>
+                  <Flex>
+                    
+                    <Image boxSize="150px" src={el.image} alt={el.title} height={["100px","150px","152px"]}/>
+                    <Image
+                      height={["45px","55px","55px"]}
+                      src={
+                        cart.find((item: any) => item.id === el.id)
+                          ? 'https://www.linkpicture.com/q/minusicon.svg'
+                          : 'https://www.linkpicture.com/q/plusicon.svg'
+                      }
+                      marginLeft="-20px"
+                      marginTop={["70px","90px","90px"]}
+                      onClick={() => {
+                        toggleImage(el);
+                      }}
+                      alt="Toggle Image"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Flex>
+                  <Text fontSize={["md","xl","xl"]}>₹: {el.price}</Text>
+                  <Text fontSize={["md","xl","xl"]}>{el.category}</Text>
+                  <Text fontSize="l" color="grey">{el.rating.rate}</Text>
+                </Box>
+              );
+            })}
+          </Flex>
+          </Box>
 
+          {/* 5---------------------- */}
+          <Box ref={bagRef}>
+          <Box textAlign="start" marginTop="25px">
+            <Text fontSize="3xl"> Bags</Text>
+          </Box>
+          <Flex  gap={["30px","0px","0px"]} height={["270px","270px","270px"]}>
+            {products.map((el: any) => {
+              return (
+                <Box width={["400px","300px","300px"]}display="flex" flexDirection="column" alignItems="start" gap={["5px","8px","8px"]}>
+                  <Flex>
+                    
+                    <Image boxSize="150px" src={el.image} alt={el.title} height={["100px","150px","152px"]}/>
+                    <Image
+                      height={["45px","55px","55px"]}
+                      src={
+                        cart.find((item: any) => item.id === el.id)
+                          ? 'https://www.linkpicture.com/q/minusicon.svg'
+                          : 'https://www.linkpicture.com/q/plusicon.svg'
+                      }
+                      marginLeft="-20px"
+                      marginTop={["70px","90px","90px"]}
+                      onClick={() => {
+                        toggleImage(el);
+                      }}
+                      alt="Toggle Image"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Flex>
+                  <Text fontSize={["md","xl","xl"]}>₹: {el.price}</Text>
+                  <Text fontSize={["md","xl","xl"]}>{el.category}</Text>
+                  <Text fontSize="l" color="grey">{el.rating.rate}</Text>
+                </Box>
+              );
+            })}
+          </Flex>
+          </Box>
        
 
             
