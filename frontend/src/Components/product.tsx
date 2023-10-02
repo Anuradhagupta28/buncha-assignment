@@ -1,8 +1,8 @@
-import { Flex, Button, Box, Image, VStack, Text } from "@chakra-ui/react";
+import { Flex, Button, Box, Image, VStack, Stack, Text } from "@chakra-ui/react";
 import Scroll from "./scroll";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { countAction, setDataSave } from "../Redux/receipeAction";
 
@@ -15,7 +15,17 @@ const retrievePosts = async () => {
 
 const Product = () => {
   const [cart, setCart] = useState<any>([]);
-  const dispatch=useDispatch()
+  const dispatch=useDispatch();
+ 
+  const productRef = useRef(null);
+  const jewelryRef = useRef(null);
+  
+
+  const scrollToDiv = (ref:any) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   
   const toggleImage = (el: any) => {
    
@@ -49,8 +59,8 @@ const Product = () => {
   } = useQuery("postsData", retrievePosts);
 
   if (isLoading) return <Box>Fetching posts...</Box>;
-  // if (error) return <Box>An error occurred: {error}</Box>;
-  // console.log(products);
+ 
+ 
 
 
   const settings: object = {
@@ -87,11 +97,11 @@ const Product = () => {
       },
     ],
   };
-
+  const isMobile = window.innerWidth <= 768; 
   return (
     <Box>
-      <Flex >
-        <VStack  margin="30px">
+      <Stack direction={["column","row", "row"]} >
+        <Stack direction={["row","column", "column"]} margin="30px" >
           <Button
             width="200px"
             height="45px"
@@ -102,11 +112,12 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(productRef)}
           >
-            Produce
+           Product
           </Button>
           <Button
-            width="200px"
+            width={["200px"]}
             height="45px"
             font-size="16px"
             backgroundColor="white"
@@ -115,8 +126,9 @@ const Product = () => {
             alignItems="start"
             color="grey"
             _hover={{ backgroundColor: "#5DA9E9", color: "white" }}
+            onClick={() => scrollToDiv(jewelryRef)}
           >
-            Prepare Foods
+           Jewelry
           </Button>
           <Button
             width="200px"
@@ -235,22 +247,24 @@ const Product = () => {
           >
             Prepare Foods
           </Button>
-        </VStack>
+        </Stack>
         {/* <Scroll /> */}
 
       
          
-               {/*  1----------------------------*/}
+              
         <Box margin="30px">
+           {/*  1----------------------------*/}
+           <Box ref={productRef}>
           <Box textAlign="start" marginTop="25px">
-            <Text fontSize="3xl">Title</Text>
+            <Text fontSize="3xl"> Product</Text>
           </Box>
           <Flex>
             {products.map((el: any) => {
               return (
-                <Box w="300px" display="flex" flexDirection="column" alignItems="start" gap="8px">
+                <Box w={isMobile ? "100%" : "300px"} display="flex" flexDirection="column" alignItems="start" gap="8px">
                   <Flex>
-                    <Image boxSize="150px" src={el.image} alt={el.title} />
+                    <Image boxSize={isMobile ? "100px" : "150px"} src={el.image} alt={el.title} />
                     <Image
                       height="55px"
                       src={
@@ -274,12 +288,13 @@ const Product = () => {
               );
             })}
           </Flex>
+          </Box>
 
               {/*  2----------------------------*/}
 
-          
+          <Box ref={jewelryRef}>
           <Box textAlign="start" marginTop="25px">
-            <Text fontSize="3xl">Title</Text>
+            <Text fontSize="3xl">Jewelry</Text>
           </Box>
           <Flex>
             {products.map((el: any) => {
@@ -310,7 +325,7 @@ const Product = () => {
               );
             })}
           </Flex>
-
+          </Box>
            
 
        
@@ -324,7 +339,7 @@ const Product = () => {
 
          
           </Box>
-      </Flex>
+      </Stack>
     </Box>
   );
 };

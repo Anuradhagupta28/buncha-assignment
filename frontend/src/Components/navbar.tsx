@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
       padding={4}
       height="100px"
     >
-      <Text fontSize="3xl" fontWeight="bold">
+      <Text  fontSize={['l', '2xl', '3xl']} fontWeight="bold">
        E-commerce
       </Text>
       <Flex align="center">
